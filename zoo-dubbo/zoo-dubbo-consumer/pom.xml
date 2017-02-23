@@ -1,0 +1,40 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+    <parent>
+        <artifactId>zoo-dubbo</artifactId>
+        <groupId>com.panda</groupId>
+        <version>1.0.0-SNAPSHOT</version>
+    </parent>
+    <modelVersion>4.0.0</modelVersion>
+    <artifactId>zoo-dubbo-consumer</artifactId>
+    <packaging>war</packaging>
+    <name>zoo-dubbo-consumer</name>
+    <url>http://maven.apache.org</url>
+
+    <dependencies>
+        <dependency>
+            <groupId>com.panda</groupId>
+            <artifactId>zoo-dubbo-provider-client</artifactId>
+            <version>1.0.0-SNAPSHOT</version>
+        </dependency>
+    </dependencies>
+    <build>
+        <finalName>zoo-dubbo-consumer</finalName>
+
+        <resources>
+            <resource>
+                <directory>src/main/resources</directory>
+                <filtering>true</filtering>
+                <includes>
+                    <include>**/**</include>
+                </includes>
+            </resource>
+        </resources>
+
+        <!--给出对资源文件进行过滤的属性文件的路径，默认位于${basedir}/src/main/filters/目录下。
+        属性文件中定义若干键值对。在构建过程中，对于资源文件中出现的变量（键），将使用属性文件中该键对应的值替换。-->
+        <filters>
+            <filter>src/main/filters/${env}.properties</filter>
+        </filters>
+    </build>
+</project>
