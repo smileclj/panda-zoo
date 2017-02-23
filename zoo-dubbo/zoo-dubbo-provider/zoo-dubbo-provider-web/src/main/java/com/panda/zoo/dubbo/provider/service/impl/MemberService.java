@@ -21,6 +21,7 @@ public class MemberService implements IMemberService {
         memberDto.setSex(1);
         memberDto.setPhone("11122223333");
         result.setModel(memberDto);
+        System.out.println(1 / 0);
         return result;
     }
 

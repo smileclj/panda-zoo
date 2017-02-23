@@ -1,1 +1,2 @@
-exception=com.panda.zoo.dubbo.filter.ExceptionFilter
+customException=com.panda.zoo.dubbo.provider.service.dubbo.filter.CustomExceptionFilter
+customValidation=com.panda.zoo.dubbo.provider.dubbo.filter.CustomValidationFilter

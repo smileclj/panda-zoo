@@ -26,16 +26,7 @@ public class DubboTest {
 
     @Test
     public void getMember() {
-        try {
-            Result<MemberDto> result = memberService.getMember("1", "1");
-            Assert.assertTrue(result.isSuccess());
-        } catch (Exception e) {
-            if (e instanceof RpcException) {
-                if (e.getCause() instanceof ConstraintViolationException) {
-                    ConstraintViolationException constraintViolationException = (ConstraintViolationException) e.getCause();
-                    Set<ConstraintViolation<?>> constraintViolationSet = constraintViolationException.getConstraintViolations();
-                }
-            }
-        }
+        Result<MemberDto> result = memberService.getMember(null, null);
+        Assert.assertTrue(result.isSuccess());
     }
 }
