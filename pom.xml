@@ -11,6 +11,7 @@
     <modules>
         <module>zoo-dubbo</module>
         <module>zoo-common</module>
+        <module>zoo-mvc</module>
     </modules>
 
     <properties>
@@ -24,6 +25,7 @@
         <validation_api_version>1.0.0.GA</validation_api_version>
         <hibernate_validator_version>4.2.0.Final</hibernate_validator_version>
         <guava_version>19.0</guava_version>
+        <fastjson_version>1.2.7</fastjson_version>
     </properties>
 
     <dependencyManagement>
@@ -48,6 +50,11 @@
                 <groupId>com.google.guava</groupId>
                 <artifactId>guava</artifactId>
                 <version>${guava_version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.alibaba</groupId>
+                <artifactId>fastjson</artifactId>
+                <version>${fastjson_version}</version>
             </dependency>
 
             <!--log-->
@@ -107,6 +114,11 @@
             <dependency>
                 <groupId>org.springframework</groupId>
                 <artifactId>spring-web</artifactId>
+                <version>${spring_version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework</groupId>
+                <artifactId>spring-webmvc</artifactId>
                 <version>${spring_version}</version>
             </dependency>
 
