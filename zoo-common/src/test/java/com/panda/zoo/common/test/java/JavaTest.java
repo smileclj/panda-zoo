@@ -1,10 +1,7 @@
 package com.panda.zoo.common.test.java;
 
 import com.alibaba.fastjson.JSON;
-import com.panda.zoo.common.test.java.model.Child1;
-import com.panda.zoo.common.test.java.model.Child2;
-import com.panda.zoo.common.test.java.model.Parent;
-import com.panda.zoo.common.test.java.model.StaticModel;
+import com.panda.zoo.common.test.java.model.*;
 import org.junit.Test;
 
 import java.util.ArrayList;
@@ -54,4 +51,12 @@ public class JavaTest {
     private <T> List<T> get() {
         return new ArrayList<>();
     }
+
+    @Test
+    public void testExtendV2(){
+        ChildExtend childExtend = new ChildExtend();
+        childExtend.say();
+        System.out.println(childExtend.getId());
+    }
+
 }
