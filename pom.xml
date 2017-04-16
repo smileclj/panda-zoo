@@ -12,6 +12,7 @@
         <module>zoo-dubbo</module>
         <module>zoo-common</module>
         <module>zoo-mvc</module>
+        <module>zoo-zookeeper</module>
     </modules>
 
     <properties>
@@ -26,7 +27,11 @@
         <hibernate_validator_version>4.2.0.Final</hibernate_validator_version>
         <guava_version>19.0</guava_version>
         <fastjson_version>1.2.7</fastjson_version>
-        <servlet.version>3.1.0</servlet.version>
+        <servlet_version>3.1.0</servlet_version>
+        <zookeeper_version>3.4.9</zookeeper_version>
+        <zkclient_version>0.1</zkclient_version>
+        <curator_version>3.3.0</curator_version>
+        <commons_fileupload_version>1.3.2</commons_fileupload_version>
     </properties>
 
     <dependencyManagement>
@@ -34,7 +39,7 @@
             <dependency>
                 <groupId>javax.servlet</groupId>
                 <artifactId>javax.servlet-api</artifactId>
-                <version>${servlet.version}</version>
+                <version>${servlet_version}</version>
                 <scope>provided</scope>
             </dependency>
             <!--common-->
@@ -63,6 +68,13 @@
                 <artifactId>fastjson</artifactId>
                 <version>${fastjson_version}</version>
             </dependency>
+            <!-- https://mvnrepository.com/artifact/commons-fileupload/commons-fileupload -->
+            <dependency>
+                <groupId>commons-fileupload</groupId>
+                <artifactId>commons-fileupload</artifactId>
+                <version>${commons_fileupload_version}</version>
+            </dependency>
+
 
             <!--log-->
             <dependency>
@@ -155,6 +167,38 @@
                     </exclusion>
                 </exclusions>
             </dependency>
+
+            <!--zk-->
+            <!--<dependency>-->
+                <!--<groupId>org.apache.zookeeper</groupId>-->
+                <!--<artifactId>zookeeper</artifactId>-->
+                <!--<version>${zookeeper_version}</version>-->
+            <!--</dependency>-->
+            <!--<dependency>-->
+                <!--<groupId>com.github.sgroschupf</groupId>-->
+                <!--<artifactId>zkclient</artifactId>-->
+                <!--<version>${zkclient_version}</version>-->
+            <!--</dependency>-->
+            <!--<dependency>-->
+                <!--<groupId>org.apache.curator</groupId>-->
+                <!--<artifactId>curator-framework</artifactId>-->
+                <!--<version>${curator_version}</version>-->
+            <!--</dependency>-->
+            <!--<dependency>-->
+                <!--<groupId>org.apache.curator</groupId>-->
+                <!--<artifactId>curator-client</artifactId>-->
+                <!--<version>${curator_version}</version>-->
+            <!--</dependency>-->
+            <dependency>
+                <groupId>org.apache.curator</groupId>
+                <artifactId>curator-recipes</artifactId>
+                <version>${curator_version}</version>
+            </dependency>
+            <!--<dependency>-->
+                <!--<groupId>org.apache.curator</groupId>-->
+                <!--<artifactId>curator-test</artifactId>-->
+                <!--<version>${curator_version}</version>-->
+            <!--</dependency>-->
         </dependencies>
     </dependencyManagement>
 

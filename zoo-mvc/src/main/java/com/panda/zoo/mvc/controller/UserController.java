@@ -6,7 +6,9 @@ import com.panda.zoo.mvc.service.IUserService;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -46,6 +48,13 @@ public class UserController {
     @ResponseBody
     public Result testReq(HttpServletRequest req) {
         Map<String, String[]> map = req.getParameterMap();
+        Result result = new Result();
+        return result;
+    }
+
+    @RequestMapping("/upload")
+    @ResponseBody
+    public Result upload(@RequestParam(required = false) CommonsMultipartFile file) {
         Result result = new Result();
         return result;
     }

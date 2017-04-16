@@ -4,10 +4,8 @@ import com.alibaba.fastjson.JSON;
 import com.panda.zoo.common.test.java.model.*;
 import org.junit.Test;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Iterator;
-import java.util.List;
+import java.util.*;
+import java.util.concurrent.TimeUnit;
 
 /**
  * Created by huixiangdou on 2017/2/25.
@@ -53,10 +51,30 @@ public class JavaTest {
     }
 
     @Test
-    public void testExtendV2(){
+    public void testExtendV2() {
         ChildExtend childExtend = new ChildExtend();
         childExtend.say();
         System.out.println(childExtend.getId());
     }
 
+    @Test
+    public void timeUnit() {
+        System.out.println(TimeUnit.MINUTES.toMillis(3));
+    }
+
+    @Test
+    public void calendar() {
+        Calendar calendar = Calendar.getInstance();
+        int dayOfWeek = calendar.get(Calendar.DAY_OF_WEEK) - 1;
+        System.out.println(dayOfWeek);
+    }
+
+    @Test
+    public void extend() {
+        Parent p1 = new Child1();
+        Parent p2 = new Child2();
+
+        System.out.println(p1);
+        System.out.println(p2);
+    }
 }
