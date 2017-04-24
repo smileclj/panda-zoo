@@ -19,4 +19,9 @@ public class UserServiceImpl implements IUserService {
         UserVo userVo = webApplicationContext.getBean(UserVo.class);
         UserVo userVo1 = (UserVo) webApplicationContext.getBean("userVo");
     }
+
+    @Override
+    public void testAop() {
+        System.out.println("testAop");
+    }
 }

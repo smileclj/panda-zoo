@@ -77,4 +77,20 @@ public class JavaTest {
         System.out.println(p1);
         System.out.println(p2);
     }
+
+    @Test
+    public void testBoolean() {
+        System.out.println(Boolean.valueOf("1"));
+        System.out.println(Boolean.valueOf("0"));
+        System.out.println(Boolean.valueOf("true"));
+        System.out.println(Boolean.valueOf("false"));
+        System.out.println(Boolean.valueOf(true));
+    }
+
+    @Test
+    public void testArrayCopy() {
+        Integer[] arr1 = new Integer[]{1, 2, 3, 4};
+        Integer[] arr2 = new Integer[]{5, 6, 7, 8};
+        System.arraycopy(arr1, 0, arr2, 2, 2);
+    }
 }

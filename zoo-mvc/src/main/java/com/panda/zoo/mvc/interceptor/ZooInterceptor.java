@@ -23,7 +23,8 @@ public class ZooInterceptor implements HandlerInterceptor {
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object o) throws Exception {
         // 解决ajax跨域问题
 //        response.setHeader("Access-Control-Allow-Origin", "*");
-        System.out.println(request.getSession().getId());
+//        System.out.println(request.getSession().getId());
+        System.out.println("ZooInterceptor pre");
         return true;
     }
 
@@ -40,13 +41,14 @@ public class ZooInterceptor implements HandlerInterceptor {
     @Override
     public void postHandle(HttpServletRequest request, HttpServletResponse response, Object o, ModelAndView modelAndView)
             throws Exception {
-        ServletInputStream sis = request.getInputStream();
-        byte[] bs = new byte[1024];
-
-        while (sis.available() > 0) {
-            sis.read(bs);
-        }
-        System.out.println(new String(bs, "UTF-8"));
+//        ServletInputStream sis = request.getInputStream();
+//        byte[] bs = new byte[1024];
+//
+//        while (sis.available() > 0) {
+//            sis.read(bs);
+//        }
+//        System.out.println(new String(bs, "UTF-8"));
+        System.out.println("ZooInterceptor post");
     }
 
     /**
@@ -61,5 +63,6 @@ public class ZooInterceptor implements HandlerInterceptor {
     @Override
     public void afterCompletion(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse,
                                 Object o, Exception e) throws Exception {
+        System.out.println("ZooInterceptor after");
     }
 }
