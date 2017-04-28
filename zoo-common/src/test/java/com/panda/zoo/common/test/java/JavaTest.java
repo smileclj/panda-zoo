@@ -93,4 +93,15 @@ public class JavaTest {
         Integer[] arr2 = new Integer[]{5, 6, 7, 8};
         System.arraycopy(arr1, 0, arr2, 2, 2);
     }
+
+    @Test
+    public void testEnum(){
+        System.out.println(TypeEnum.A == TypeEnum.A);
+    }
+
+    @Test
+    public void hashcode(){
+        Integer a = 1;
+        System.out.println(a.hashCode());
+    }
 }

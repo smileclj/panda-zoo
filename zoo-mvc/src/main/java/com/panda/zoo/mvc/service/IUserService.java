@@ -11,4 +11,6 @@ public interface IUserService {
     void test(HttpServletRequest req);
 
     void testAop();
+
+    void testNoAop();
 }

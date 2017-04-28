@@ -11,7 +11,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class ZooAop {
 
-    @Pointcut("execution(* com.panda.zoo.mvc.service..*.*(..))")
+    @Pointcut("execution(* com.panda.zoo.mvc.service.impl.UserServiceImpl.testAop(..))")
     public void service() {
 
     }

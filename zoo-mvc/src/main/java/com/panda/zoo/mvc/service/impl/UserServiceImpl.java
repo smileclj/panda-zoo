@@ -24,4 +24,9 @@ public class UserServiceImpl implements IUserService {
     public void testAop() {
         System.out.println("testAop");
     }
+
+    @Override
+    public void testNoAop() {
+        System.out.println("testNoAop");
+    }
 }

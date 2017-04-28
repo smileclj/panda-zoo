@@ -36,18 +36,26 @@ public class UserController {
         return result;
     }
 
-    @RequestMapping("/test")
+    @RequestMapping("/testRequestBody")
     @ResponseBody
-    public Result test(@RequestBody UserVo body) {
+    public Result testRequestBody(@RequestBody UserVo body) {
         System.out.println(body);
         Result result = new Result();
         result.setData(body);
         return result;
     }
 
-    @RequestMapping("/test1")
+    @RequestMapping("/testWrapParam")
     @ResponseBody
-    public ModelAndView test1() {
+    public Result testWrapParam(UserVo userVo) {
+        Result result = new Result();
+        result.setData(userVo);
+        return result;
+    }
+
+    @RequestMapping("/testMv")
+    @ResponseBody
+    public ModelAndView testMv() {
         return new ModelAndView();
     }
 
@@ -61,7 +69,7 @@ public class UserController {
 
     @RequestMapping("/upload")
     @ResponseBody
-    public Result upload(@RequestParam(required = false) CommonsMultipartFile file) {
+    public Result upload(CommonsMultipartFile file, String name) {
         Result result = new Result();
         return result;
     }
