@@ -16,3 +16,5 @@ hs_err_pid*
 target/
 logs/
 log/
+gc.log
+java_pid*

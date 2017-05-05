@@ -13,6 +13,8 @@
         <module>zoo-common</module>
         <module>zoo-mvc</module>
         <module>zoo-zookeeper</module>
+        <module>zoo-servlet</module>
+        <module>zoo-netty</module>
     </modules>
 
     <properties>

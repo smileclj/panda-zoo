@@ -1,0 +1,9 @@
+jvm配置信息
+
+java_home:/Library/Java/JavaVirtualMachines/jdk1.7.0_80.jdk/Contents/Home
+
+-Xms5m -Xmx5m -XX:+HeapDumpOnOutOfMemoryError -Xss160k
+-XX:PermSize=5M -XX:MaxPermSize=5M
+-XX:MaxDirectMemorySize=10M
+-XX:+PrintGCDetails
+-Xloggc:gc.log
