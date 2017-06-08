@@ -1,6 +1,7 @@
 package com.panda.zoo.common.test.java;
 
 import org.apache.commons.lang3.BooleanUtils;
+import org.apache.commons.lang3.RandomUtils;
 import org.junit.Test;
 
 /**
@@ -17,5 +18,10 @@ public class CommonUtilTest {
         System.out.println("============================");
         System.out.println(BooleanUtils.toBoolean(2));
         System.out.println(BooleanUtils.toBoolean(-1));
+    }
+
+    @Test
+    public void random(){
+        RandomUtils.nextBytes(1);
     }
 }

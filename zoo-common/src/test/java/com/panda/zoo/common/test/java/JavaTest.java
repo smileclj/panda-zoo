@@ -1,9 +1,11 @@
 package com.panda.zoo.common.test.java;
 
 import com.alibaba.fastjson.JSON;
+import com.google.common.collect.Lists;
 import com.panda.zoo.common.test.java.model.*;
 import org.junit.Test;
 
+import java.io.*;
 import java.util.*;
 import java.util.concurrent.TimeUnit;
 
@@ -95,13 +97,88 @@ public class JavaTest {
     }
 
     @Test
-    public void testEnum(){
+    public void testEnum() {
         System.out.println(TypeEnum.A == TypeEnum.A);
     }
 
     @Test
-    public void hashcode(){
+    public void hashcode() {
         Integer a = 1;
         System.out.println(a.hashCode());
+    }
+
+    @Test
+    public void serialize() {
+        try {
+            ByteArrayOutputStream bos = new ByteArrayOutputStream();
+            ObjectOutputStream oos = new ObjectOutputStream(bos);
+            SC sc1 = new SC();
+            sc1.setId(2);
+            oos.writeObject(sc1);
+            ObjectInputStream ois = new ObjectInputStream(new ByteArrayInputStream(bos.toByteArray()));
+            SC sc = (SC) ois.readObject();
+            System.out.println(sc);
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Test
+    public void convert() {
+        SC sc = new SC();
+        sc.setId(1);
+        sc.setName("name");
+
+        SP sp = (SP) sc;
+        System.out.println(sp);
+
+
+        SP sp1 = new SP();
+        sp1.setId(1);
+        SC sc1 = (SC) sp1;
+        System.out.println(sc1);
+    }
+
+    @Test
+    public void random() {
+        Random r1 = new Random(10);
+        Random r2 = new Random(10);
+        for (int i = 0; i < 10; i++) {
+            System.out.println(r1.nextInt());
+            System.out.println(r2.nextInt());
+        }
+    }
+
+    @Test
+    public void seq() {
+        System.out.println((int) (System.currentTimeMillis() % Integer.MAX_VALUE));
+    }
+
+    @Test
+    public void getByte() throws UnsupportedEncodingException {
+        String msg = "我们";
+        int length = msg.getBytes("UTF-8").length;
+        System.out.println(length);
+    }
+
+    @Test
+    public void listString() {
+        List<String> list = Lists.newArrayList("1", "2");
+        for (String s : list) {
+            s = "a" + s;
+        }
+        System.out.println(list.toString());
+    }
+
+    @Test
+    public void ab(){
+        AbstractModel abstractModel = new AbstractModel() {
+            @Override
+            public int hashCode() {
+                return super.hashCode();
+            }
+        };
     }
 }

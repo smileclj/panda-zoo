@@ -3,6 +3,7 @@ package com.panda.zoo.mvc.controller;
 import com.panda.zoo.mvc.model.Result;
 import com.panda.zoo.mvc.model.UserVo;
 import com.panda.zoo.mvc.service.IUserService;
+import com.panda.zoo.mvc.service.impl.UserServiceImpl;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -13,6 +14,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -70,6 +72,13 @@ public class UserController {
     @RequestMapping("/upload")
     @ResponseBody
     public Result upload(CommonsMultipartFile file, String name) {
+        Result result = new Result();
+        return result;
+    }
+
+    @RequestMapping("/multiUpload")
+    @ResponseBody
+    public Result multiUpload(@RequestParam("file") CommonsMultipartFile file, @RequestParam("file1") CommonsMultipartFile file1, String name) {
         Result result = new Result();
         return result;
     }
