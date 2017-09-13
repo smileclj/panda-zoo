@@ -3,6 +3,7 @@ package com.panda.zoo.common.test.java;
 import com.alibaba.fastjson.JSON;
 import com.google.common.collect.Lists;
 import com.panda.zoo.common.test.java.model.*;
+import com.panda.zoo.common.test.jvm.model.Student;
 import org.junit.Test;
 
 import java.io.*;
@@ -173,12 +174,37 @@ public class JavaTest {
     }
 
     @Test
-    public void ab(){
+    public void ab() {
         AbstractModel abstractModel = new AbstractModel() {
             @Override
             public int hashCode() {
                 return super.hashCode();
             }
         };
+    }
+
+    @Test
+    public void int_max() {
+        System.out.println(Integer.MAX_VALUE);
+    }
+
+    @Test
+    public void print() {
+        SC sc = new SC();
+        sc.setId(1);
+        sc.setName("2");
+        sc.print();
+    }
+
+    @Test
+    public void forceConvert() {
+        Object obj = null;
+        Student s = (Student) obj;
+    }
+
+    @Test
+    public void list(){
+        List<Integer> list = Lists.newArrayList(1,2,3);
+        Integer[] arr = list.toArray(new Integer[0]);
     }
 }

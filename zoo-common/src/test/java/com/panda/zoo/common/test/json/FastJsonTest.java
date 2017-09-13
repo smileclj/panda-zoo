@@ -1,7 +1,10 @@
 package com.panda.zoo.common.test.json;
 
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
+import com.alibaba.fastjson.serializer.SerializerFeature;
 import com.panda.zoo.common.test.java.model.EmptyField;
+import com.panda.zoo.common.test.java.model.copy.StudentDO;
 import com.panda.zoo.common.test.json.model.User;
 import org.apache.commons.fileupload.FileItem;
 import org.apache.commons.fileupload.FileItemFactory;
@@ -11,6 +14,8 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
 import java.io.File;
+import java.util.Map;
+import java.util.TreeMap;
 
 /**
  * Created by huixiangdou on 2017/3/1.
@@ -36,7 +41,45 @@ public class FastJsonTest {
     }
 
     @Test
-    public void serializeEmptyField(){
+    public void serializeEmptyField() {
         System.out.println(JSON.toJSONString(new EmptyField()));
+    }
+
+    @Test
+    public void testNull() {
+        User user = new User();
+
+        System.out.println(JSON.toJSONString(user, new SerializerFeature[]{SerializerFeature.WriteMapNullValue,
+                SerializerFeature.WriteNullStringAsEmpty}));
+    }
+
+    @Test
+    public void testMap() {
+        Map<String, User> map = new TreeMap<>();
+        User user = new User();
+        user.setId(1);
+        user.setName("name");
+        map.put(String.valueOf(user.getId()), user);
+
+        String str = JSON.toJSONString(map);
+        System.out.println(str);
+
+        Map<String, JSONObject> map1 = JSON.parseObject(str, Map.class);
+    }
+
+    @Test
+    public void testB() {
+        StudentDO studentDO = new StudentDO();
+        studentDO.setId(1);
+        System.out.println(JSON.toJSONString(studentDO));
+
+        StudentDO studentDO1 = JSON.parseObject(" {\"id\":\"1\",\"sex\":0}", StudentDO.class);
+    }
+
+    @Test
+    public void testUser() {
+        User user = new User();
+        user.setId(1);
+        System.out.println(JSON.toJSONString(user));
     }
 }

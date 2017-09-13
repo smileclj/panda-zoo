@@ -4,7 +4,7 @@ package com.panda.zoo.common.test.json.model;
  * Created by huixiangdou on 2017/3/1.
  */
 public class User {
-    private Integer id;
+    private transient Integer id;
     private String name;
 
     public Integer getId() {

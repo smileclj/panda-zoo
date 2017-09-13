@@ -1,0 +1,1 @@
+customException=com.panda.zoo.dubbo.consumer.dubbo.filter.ExceptionFilter

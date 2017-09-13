@@ -71,7 +71,16 @@ public class UserController {
 
     @RequestMapping("/upload")
     @ResponseBody
-    public Result upload(CommonsMultipartFile file, String name) {
+    public Result upload(@RequestParam("file") CommonsMultipartFile file, String name) {
+        System.out.println(file.getName());
+        System.out.println(file.getContentType());
+        System.out.println(file.getOriginalFilename());
+        System.out.println(file.getStorageDescription());
+
+//        file
+//        image/jpeg
+//        longmao.jpg
+//        at [/Users/chenlijiang/Library/Caches/IntelliJIdea2016.3/tomcat/Unnamed_zoo_2/work/Catalina/localhost/ROOT/upload_6608553a_c77c_40b4_a8e3_31290647a667_00000000.tmp]
         Result result = new Result();
         return result;
     }

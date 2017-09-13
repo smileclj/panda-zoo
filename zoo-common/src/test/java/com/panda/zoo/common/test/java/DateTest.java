@@ -22,4 +22,10 @@ public class DateTest {
     public void format() {
         System.out.println(DateFormatUtils.format(DateUtils.addDays(new Date(), -7), "yyyy-MM-dd"));
     }
+
+    @Test
+    public void after(){
+        Date d = new Date();
+        System.out.println(d.before(d));
+    }
 }
