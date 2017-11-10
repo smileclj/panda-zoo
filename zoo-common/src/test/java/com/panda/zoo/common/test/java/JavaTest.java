@@ -1,12 +1,20 @@
 package com.panda.zoo.common.test.java;
 
 import com.alibaba.fastjson.JSON;
+import com.google.common.base.CaseFormat;
 import com.google.common.collect.Lists;
+import com.google.common.collect.Maps;
 import com.panda.zoo.common.test.java.model.*;
+import com.panda.zoo.common.test.java.model.oval.Model;
 import com.panda.zoo.common.test.jvm.model.Student;
+import com.sun.javafx.binding.StringFormatter;
+import org.apache.commons.lang3.StringUtils;
 import org.junit.Test;
 
+import java.beans.Introspector;
 import java.io.*;
+import java.net.URL;
+import java.text.MessageFormat;
 import java.util.*;
 import java.util.concurrent.TimeUnit;
 
@@ -203,8 +211,122 @@ public class JavaTest {
     }
 
     @Test
-    public void list(){
-        List<Integer> list = Lists.newArrayList(1,2,3);
+    public void list() {
+        List<Integer> list = Lists.newArrayList(1, 2, 3);
         Integer[] arr = list.toArray(new Integer[0]);
+    }
+
+    @Test
+    public void listRemoveAll() {
+        List list1 = Lists.newArrayList(1, 2, 3);
+        List list3 = Lists.newArrayList(list1);
+        List list2 = Lists.newArrayList(1);
+        list1.removeAll(list2);
+        System.out.println(JSON.toJSONString(list1));
+    }
+
+    @Test
+    public void testBooleanValueOf() {
+        Boolean b1 = Boolean.valueOf("true");
+        Boolean b2 = Boolean.valueOf(null);
+        Integer i1 = Integer.valueOf(null);
+    }
+
+    @Test
+    public void subStr() {
+        String v = "123";
+        System.out.println(v.substring(2, 3));
+    }
+
+    @Test
+    public void m() {
+//        List<int[]> list = Lists.newArrayList();
+//        list.add(new int[]{1, 2});
+//        list.add(new int[]{1, 2, 3});
+//        list.add(new int[]{1, 2, 3, 4});
+//        System.out.println(Iterables.toArray(list, int[].class));
+
+        int[][] i = new int[3][];
+
+        i[1] = new int[]{1, 2, 3};
+        i[2] = new int[]{1, 2};
+        System.out.println(JSON.toJSONString(i));
+    }
+
+    @Test
+    public void printExtendClassName() {
+        AbstractModel model = new Model();
+        System.out.println(model.getClass().getSimpleName());
+    }
+
+    @Test
+    public void testMap() {
+        Map<String, String> map = Maps.newHashMap();
+        map.put(null, "a");
+        String v = map.get(null);
+    }
+
+    @Test
+    public void replaceChars() {
+        String str = "MemberReq";
+        String executor = "Executor";
+        String req = "Req";
+
+        System.out.println(Introspector.decapitalize(StringUtils.replace(str, req, executor)));
+
+    }
+
+    @Test
+    public void startWith() {
+        String str = "{1";
+        System.out.println(str.startsWith("{"));
+    }
+
+    public static final int add(int i) {
+        i++;
+        return i;
+    }
+
+    public static void main(String[] args) {
+        int i = 1;
+        i = add(i);
+        i = add(i);
+        System.out.println(i);
+    }
+
+    @Test
+    public void parseUrl() throws Exception {
+        URL url = new URL("http://www.runoob.com/index.html?language=cn#j2se");
+        System.out.println("URL 为：" + url.toString());
+        System.out.println("协议为：" + url.getProtocol());
+        System.out.println("验证信息：" + url.getAuthority());
+        System.out.println("文件名及请求参数：" + url.getFile());
+        System.out.println("主机名：" + url.getHost());
+        System.out.println("路径：" + url.getPath());
+        System.out.println("端口：" + url.getPort());
+        System.out.println("默认端口：" + url.getDefaultPort());
+        System.out.println("请求参数：" + url.getQuery());
+        System.out.println("定位位置：" + url.getRef());
+    }
+
+    @Test
+    public void sub() {
+        String str = "/upload_files/a/b/c.jpg";
+        System.out.println(str.substring(14));
+        System.out.println(str.substring(1));
+    }
+
+    @Test
+    public void messageFormat() {
+        System.out.println(MessageFormat.format("entityId:{0},name:{1},age:{2}", new Object[]{"11", "22", "3"}));
+    }
+
+    @Test
+    public void replaceAll() {
+        String str = "name:{},id:{}";
+        str = str.replaceAll("\\{}", "%s");
+        System.out.println(str);
+        str = String.format(str, new Object[]{"小明", 1});
+        System.out.println(str);
     }
 }

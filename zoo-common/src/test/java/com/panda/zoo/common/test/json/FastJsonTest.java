@@ -82,4 +82,9 @@ public class FastJsonTest {
         user.setId(1);
         System.out.println(JSON.toJSONString(user));
     }
+
+    @Test
+    public void testString(){
+        System.out.println(JSON.toJSONString("22222"));
+    }
 }
