@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.panda.zoo.mybatis.mapper.StudentMapper">
+    <resultMap id="BaseResultMap" type="com.panda.zoo.mybatis.model.Student">
+        <id column="id" jdbcType="VARCHAR" property="id" />
+        <result column="name" jdbcType="VARCHAR" property="name" />
+        <result column="age" jdbcType="INTEGER" property="age" />
+        <result column="level" jdbcType="INTEGER" property="level" />
+        <result column="sort_code" jdbcType="INTEGER" property="sortCode" />
+        <result column="create_time" jdbcType="BIGINT" property="createTime" />
+        <result column="is_valid" jdbcType="INTEGER" property="isValid" />
+        <result column="entity_id" jdbcType="VARCHAR" property="entityId" />
+    </resultMap>
+    <sql id="Base_Column_List">
+        id, name, age, level, sort_code, create_time, is_valid, entity_id
+    </sql>
+    <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+        select 
+        <include refid="Base_Column_List" />
+        from student
+        where id = #{id,jdbcType=VARCHAR}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+        delete from student
+        where id = #{id,jdbcType=VARCHAR}
+    </delete>
+    <insert id="insertSelective" parameterType="com.panda.zoo.mybatis.model.Student">
+        insert into student
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="name != null">
+                name,
+            </if>
+            <if test="age != null">
+                age,
+            </if>
+            <if test="level != null">
+                level,
+            </if>
+            <if test="sortCode != null">
+                sort_code,
+            </if>
+            <if test="createTime != null">
+                create_time,
+            </if>
+            <if test="isValid != null">
+                is_valid,
+            </if>
+            <if test="entityId != null">
+                entity_id,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=VARCHAR},
+            </if>
+            <if test="name != null">
+                #{name,jdbcType=VARCHAR},
+            </if>
+            <if test="age != null">
+                #{age,jdbcType=INTEGER},
+            </if>
+            <if test="level != null">
+                #{level,jdbcType=INTEGER},
+            </if>
+            <if test="sortCode != null">
+                #{sortCode,jdbcType=INTEGER},
+            </if>
+            <if test="createTime != null">
+                #{createTime,jdbcType=BIGINT},
+            </if>
+            <if test="isValid != null">
+                #{isValid,jdbcType=INTEGER},
+            </if>
+            <if test="entityId != null">
+                #{entityId,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective">
+        update student
+        <set>
+            <if test="student.name != null">
+                name = #{student.name,jdbcType=VARCHAR},
+            </if>
+            <if test="student.age != null">
+                age = #{student.age,jdbcType=INTEGER},
+            </if>
+            <if test="student.level != null">
+                level = #{student.level,jdbcType=INTEGER},
+            </if>
+            <if test="student.sortCode != null">
+                sort_code = #{student.sortCode,jdbcType=INTEGER},
+            </if>
+            <if test="student.createTime != null">
+                create_time = #{student.createTime,jdbcType=BIGINT},
+            </if>
+            <if test="student.isValid != null">
+                is_valid = #{student.isValid,jdbcType=INTEGER},
+            </if>
+            <if test="student.entityId != null">
+                entity_id = #{student.entityId,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where id = #{student.id,jdbcType=VARCHAR}
+        <if test="valid">
+          and is_valid = 1
+        </if>
+    </update>
+</mapper>
