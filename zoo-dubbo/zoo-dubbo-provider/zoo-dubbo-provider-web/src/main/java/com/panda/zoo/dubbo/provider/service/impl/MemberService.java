@@ -1,5 +1,6 @@
 package com.panda.zoo.dubbo.provider.service.impl;
 
+import com.alibaba.dubbo.rpc.RpcContext;
 import com.panda.zoo.dubbo.provider.dto.MemberDto;
 import com.panda.zoo.dubbo.provider.dto.Result;
 import com.panda.zoo.dubbo.provider.service.IMemberService;
@@ -28,5 +29,14 @@ public class MemberService implements IMemberService {
     @Override
     public Result<MemberDto> getMember(@NotNull(message = "id不能为空") String id, @NotNull(message = "name不能为空") String name) {
         return getMember(id);
+    }
+
+    @Override
+    public Result testRpcContext(String id) {
+        RpcContext context = RpcContext.getContext();
+        System.out.println("getLocalAddressString->" + context.getLocalAddressString());
+        System.out.println("getRemoteAddressString->" + context.getRemoteAddressString());
+        System.out.println(context.getArguments());
+        return null;
     }
 }

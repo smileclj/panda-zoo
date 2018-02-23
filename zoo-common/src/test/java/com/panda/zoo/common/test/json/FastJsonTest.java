@@ -1,11 +1,13 @@
 package com.panda.zoo.common.test.json;
 
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.alibaba.fastjson.serializer.SerializerFeature;
 import com.panda.zoo.common.test.java.model.EmptyField;
 import com.panda.zoo.common.test.java.model.copy.StudentDO;
 import com.panda.zoo.common.test.json.model.User;
+import com.panda.zoo.common.test.jvm.model.Student;
 import org.apache.commons.fileupload.FileItem;
 import org.apache.commons.fileupload.FileItemFactory;
 import org.apache.commons.fileupload.disk.DiskFileItemFactory;
@@ -86,5 +88,17 @@ public class FastJsonTest {
     @Test
     public void testString(){
         System.out.println(JSON.toJSONString("22222"));
+    }
+
+    @Test
+    public void testNegative(){
+        Student s = new Student();
+        s.setId(-1);
+        s.setName("a");
+        String jsonStr = JSON.toJSONString(s);
+        System.out.println(jsonStr);
+
+        Student ss = JSON.parseObject(jsonStr,Student.class);
+        System.out.println(ss);
     }
 }

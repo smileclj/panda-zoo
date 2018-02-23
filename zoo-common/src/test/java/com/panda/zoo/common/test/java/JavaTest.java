@@ -2,18 +2,26 @@ package com.panda.zoo.common.test.java;
 
 import com.alibaba.fastjson.JSON;
 import com.google.common.base.CaseFormat;
+import com.google.common.base.Predicate;
+import com.google.common.base.Splitter;
+import com.google.common.collect.Collections2;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
+import com.panda.zoo.common.test.java.enums.EnumIndustry;
 import com.panda.zoo.common.test.java.model.*;
 import com.panda.zoo.common.test.java.model.oval.Model;
 import com.panda.zoo.common.test.jvm.model.Student;
 import com.sun.javafx.binding.StringFormatter;
+import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.math.NumberUtils;
 import org.junit.Test;
 
 import java.beans.Introspector;
 import java.io.*;
+import java.math.BigDecimal;
 import java.net.URL;
+import java.text.DecimalFormat;
 import java.text.MessageFormat;
 import java.util.*;
 import java.util.concurrent.TimeUnit;
@@ -328,5 +336,172 @@ public class JavaTest {
         System.out.println(str);
         str = String.format(str, new Object[]{"小明", 1});
         System.out.println(str);
+    }
+
+    @Test
+    public void debug(){
+        int i = 1;
+        int a = 2;
+        System.out.println(i);
+    }
+
+    @Test
+    public void debug2(){
+        Student s = new Student();
+        s.setId(1);
+        s.setName("name");
+        System.out.println(s);
+    }
+
+    @Test
+    public void enumString(){
+        System.out.println(EnumIndustry.REPAST.toString());
+    }
+
+    @Test
+    public void map(){
+        Map<String,Student> map = Maps.newHashMap();
+        Student s = new Student();
+        s.setId(1);
+        s.setName("小明");
+        map.put("1",s);
+
+        Student st = map.get("1");
+        st = new Student();
+        System.out.println(JSON.toJSONString(map));
+    }
+
+    @Test
+    public void v(){
+       Properties properties = new Properties();
+       properties.put("1","2");
+
+        System.out.println(properties);
+    }
+
+    @Test
+    public void mm(){
+        System.out.println(1 % 300);
+    }
+
+    @Test
+    public void format(){
+        int i = 1;
+        System.out.println(++i);
+//        System.out.println(++i);
+    }
+
+    @Test
+    public void write(){
+        FileWriter writer = null;
+        File file = new File("/Users/chenlijiang/Downloads/4.txt");
+        try {
+            writer = new FileWriter(file);
+            writer.write("我们是一家人");
+            writer.flush();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        } finally {
+            try {
+                writer.close();
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        }
+    }
+
+    @Test
+    public void write2(){
+        BufferedWriter bw = null;
+        File file = new File("/Users/chenlijiang/Downloads/3.txt");
+        try {
+            bw = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(file),"UTF-8"));
+            bw.write("我们是一家人");
+            bw.flush();
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        } finally {
+            try {
+                bw.close();
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        }
+    }
+
+    @Test
+    public void double2long(){
+        System.out.println(Double.valueOf(500d).longValue());
+    }
+
+    @Test
+    public void BooleanEquals(){
+        System.out.println(105 * 0.01);
+        System.out.println(100 * 0.01);
+
+        DecimalFormat df = new DecimalFormat("#.00");
+        System.out.println(Double.valueOf(df.format(500d * 0.01)));
+
+
+        BigDecimal bg = new BigDecimal(500d * 0.01);
+        System.out.println(bg.setScale(2,   BigDecimal.ROUND_HALF_UP).doubleValue());
+
+
+
+
+    }
+
+    @Test
+    public void b(){
+        System.out.println(Boolean.valueOf("0"));
+        System.out.println(Boolean.valueOf("1"));
+    }
+
+    @Test
+    public void split(){
+        List<String> list = Splitter.on(" ").splitToList("6933211466768 6933211466775 6933211466782 ");
+
+        list = Lists.newArrayList(Collections2.filter(list, new Predicate<String>() {
+            @Override
+            public boolean apply(String input) {
+                return StringUtils.isNotBlank(input);
+            }
+        }));
+        System.out.println(JSON.toJSONString(list));
+    }
+
+    @Test
+    public void removeAll(){
+        List<Integer> list = Lists.newArrayList(1,2,3);
+        list.removeAll(Lists.newArrayList(1,2));
+        System.out.println(JSON.toJSONString(list));
+    }
+
+    @Test
+    public void stringEquals(){
+        System.out.println(StringUtils.equals(null,null));
+    }
+
+    @Test
+    public void doubleEquals(){
+        System.out.println(2.12d == 2.1233d);
+    }
+
+    @Test
+    public void RemoveAll(){
+        List<Integer> list1 = Lists.newArrayList(1,2,3);
+        List<Integer> list2 = Lists.newArrayList(1);
+        List<Integer> list3 = (List)CollectionUtils.removeAll(list1,list2);
+
+        System.out.println(JSON.toJSONString(list1));
+        System.out.println(JSON.toJSONString(list2));
+        System.out.println(JSON.toJSONString(list3));
+    }
+
+    @Test
+    public void longequal(){
+        Long l1 = 1l;
+        Long l2 = 2l;
+        System.out.println(StringUtils.equals(String.valueOf(l1),String.valueOf(l2)));
     }
 }

@@ -10,6 +10,9 @@ import java.util.UUID;
 public class UuidTest {
     @Test
     public void uuid() {
-        System.out.println(UUID.randomUUID().toString().replaceAll("-", ""));
+        int count = 10;
+        for (int i = 0; i < count; i++) {
+            System.out.println(UUID.randomUUID().toString().replaceAll("-", ""));
+        }
     }
 }
