@@ -21,4 +21,12 @@ public interface IMemberService {
     Result<MemberDto> getMember(@NotNull(message = "id不能为空") String id, @NotNull(message = "name不能为空") String name);
 
     Result testRpcContext(String id);
+
+    Result<String> testAsync();
+
+    Result testAsyncVoid();
+
+    Result<String> testAsyncTime();
+
+
 }

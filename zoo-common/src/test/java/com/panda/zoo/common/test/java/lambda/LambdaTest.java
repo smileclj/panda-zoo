@@ -6,7 +6,11 @@ import org.junit.Test;
 import java.awt.Button;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Comparator;
 import java.util.List;
+import java.util.function.BinaryOperator;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 
 /**
  * @author huixiangdou
@@ -57,6 +61,17 @@ public class LambdaTest {
      */
     @Test
     public void test2() {
-        List<Integer> list = Lists.newArrayList(1,2,3);
+        BinaryOperator binaryOperator = new BinaryOperator() {
+            @Override
+            public Object apply(Object o, Object o2) {
+                return null;
+            }
+        };
+    }
+
+    @Test
+    public void sort(){
+        List<Integer> list = Lists.newArrayList(3,2,1);
+        List<Integer> newList = list.stream().sorted(Comparator.comparingInt(Integer::intValue)).collect(Collectors.toList());
     }
 }
