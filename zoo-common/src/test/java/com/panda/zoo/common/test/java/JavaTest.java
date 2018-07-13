@@ -8,9 +8,8 @@ import com.google.common.collect.Collections2;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.panda.zoo.common.test.java.enums.EnumIndustry;
+import com.panda.zoo.common.test.java.hibernate.EntityB;
 import com.panda.zoo.common.test.java.model.*;
-import com.panda.zoo.common.test.java.model.oval.Model;
-import com.panda.zoo.common.test.java.model.oval.OvalB;
 import com.panda.zoo.common.test.jvm.model.Student;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -258,12 +257,6 @@ public class JavaTest {
         i[1] = new int[]{1, 2, 3};
         i[2] = new int[]{1, 2};
         System.out.println(JSON.toJSONString(i));
-    }
-
-    @Test
-    public void printExtendClassName() {
-        AbstractModel model = new Model();
-        System.out.println(model.getClass().getSimpleName());
     }
 
     @Test
@@ -552,7 +545,7 @@ public class JavaTest {
     @Test
     public void clazzEqual(){
         System.out.println(Student.class.equals(Student.class));
-        System.out.println(Student.class.equals(OvalB.class));
+        System.out.println(Student.class.equals(EntityB.class));
     }
 
     @Test
@@ -572,5 +565,10 @@ public class JavaTest {
     @Test
     public void eq(){
         System.out.println(2.01d == 2.01d);
+    }
+
+    @Test
+    public void className(){
+        System.out.println(Student.class.getName());
     }
 }

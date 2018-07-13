@@ -16,6 +16,7 @@
         <module>zoo-servlet</module>
         <module>zoo-netty</module>
         <module>zoo-mybatis</module>
+        <module>zoo-2dfire</module>
     </modules>
 
     <properties>

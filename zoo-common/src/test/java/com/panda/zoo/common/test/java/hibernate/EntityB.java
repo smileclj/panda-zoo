@@ -1,18 +1,17 @@
-package com.panda.zoo.common.test.java.model.oval;
+package com.panda.zoo.common.test.java.hibernate;
 
-import net.sf.oval.constraint.NotBlank;
+
 import net.sf.oval.constraint.NotNull;
 
 /**
  * Created by huixiangdou on 2017/7/7.
  */
-public class OvalB {
-    @NotBlank
+public class EntityB {
     @NotNull
     private String name;
 
     @NotNull
-    private OvalP ovalP;
+    private EntityP ovalP;
 
 
     public String getName() {
@@ -23,11 +22,11 @@ public class OvalB {
         this.name = name;
     }
 
-    public OvalP getOvalP() {
+    public EntityP getOvalP() {
         return ovalP;
     }
 
-    public void setOvalP(OvalP ovalP) {
+    public void setOvalP(EntityP ovalP) {
         this.ovalP = ovalP;
     }
 }

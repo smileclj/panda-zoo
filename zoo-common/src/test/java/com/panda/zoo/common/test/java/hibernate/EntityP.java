@@ -1,14 +1,13 @@
-package com.panda.zoo.common.test.java.model.oval;
+package com.panda.zoo.common.test.java.hibernate;
 
-import net.sf.oval.constraint.NotBlank;
+
 import net.sf.oval.constraint.NotNull;
 
 /**
  * Created by huixiangdou on 2017/7/7.
  */
-public class OvalP {
+public class EntityP {
     @NotNull
-    @NotBlank
     private String id;
 
     public String getId() {
