@@ -12,17 +12,25 @@ import com.panda.zoo.common.test.java.hibernate.EntityB;
 import com.panda.zoo.common.test.java.model.*;
 import com.panda.zoo.common.test.jvm.model.Student;
 import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.StringUtils;
+import org.jbarcode.JBarcode;
+import org.jbarcode.encode.EAN13Encoder;
+import org.jbarcode.paint.EAN13TextPainter;
+import org.jbarcode.paint.WidthCodedPainter;
 import org.junit.Test;
 
 import java.beans.Introspector;
 import java.io.*;
 import java.math.BigDecimal;
 import java.net.URL;
+import java.net.URLEncoder;
 import java.text.DecimalFormat;
 import java.text.MessageFormat;
 import java.util.*;
 import java.util.concurrent.TimeUnit;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 
 /**
  * Created by huixiangdou on 2017/2/25.
@@ -509,66 +517,133 @@ public class JavaTest {
     }
 
     @Test
-    public void testListToArray(){
-        List<String> list = Lists.newArrayList("1","2");
+    public void testListToArray() {
+        List<String> list = Lists.newArrayList("1", "2");
         System.out.println(JSON.toJSONString(list.toArray(new String[]{})));
     }
 
     @Test
-    public void testDouble(){
+    public void testDouble() {
         System.out.println(Double.parseDouble("2d"));
         System.out.println(Double.parseDouble("2f"));
     }
 
     @Test
-    public void testD(){
+    public void testD() {
         double d = 36.66d;
-        System.out.println(new BigDecimal(d*100).setScale(2,BigDecimal.ROUND_HALF_EVEN).intValue());
-        System.out.println((int)(d*100));
+        System.out.println(new BigDecimal(d * 100).setScale(2, BigDecimal.ROUND_HALF_EVEN).intValue());
+        System.out.println((int) (d * 100));
     }
 
     @Test
-    public void testF(){
+    public void testF() {
         float f = 29.01f;
         System.out.println(Float.valueOf(f).doubleValue());
 
     }
 
     @Test
-    public void add(){
+    public void add() {
         int i = 100;
 
-        i*= 1 + 5/100;
+        i *= 1 + 5 / 100;
         System.out.println(i);
     }
 
     @Test
-    public void clazzEqual(){
+    public void clazzEqual() {
         System.out.println(Student.class.equals(Student.class));
         System.out.println(Student.class.equals(EntityB.class));
     }
 
     @Test
-    public void testEnum2(){
+    public void testEnum2() {
         System.out.println(EnumJavaClientType.DAO);
         System.out.println(EnumJavaClientType.DAO.name().equals("DAO"));
     }
 
     @Test
-    public void camel(){
-        System.out.println(CaseFormat.UPPER_CAMEL.to(CaseFormat.LOWER_CAMEL,"StudentClass"));
+    public void camel() {
+        System.out.println(CaseFormat.UPPER_CAMEL.to(CaseFormat.LOWER_CAMEL, "StudentClass"));
 
         System.out.println(Introspector.decapitalize("StudentClass"));
         System.out.println(Introspector.decapitalize("student_class"));
     }
 
     @Test
-    public void eq(){
+    public void eq() {
         System.out.println(2.01d == 2.01d);
     }
 
     @Test
-    public void className(){
+    public void className() {
         System.out.println(Student.class.getName());
+    }
+
+    @Test
+    public void toCharArray() {
+        char[] cs = "MULTI_".toCharArray();
+        byte[] bs1 = new byte[12];
+        for (char c : cs) {
+            ArrayUtils.addAll(bs1,charToByte(c));
+        }
+
+        byte[] bs2 = "MULTI_".getBytes();
+    }
+
+    @Test
+    public void AndAnd(){
+        System.out.println(getFalse() && getTrue());
+        System.out.println("===================");
+        System.out.println(getFalse() & getTrue());
+        System.out.println("===================");
+        System.out.println(getTrue() && getFalse());
+        System.out.println("===================");
+        System.out.println(getTrue() & getFalse());
+    }
+
+    private byte[] charToByte(char c) {
+        byte[] b = new byte[2];
+        b[0] = (byte) ((c & 0xFF00) >> 8);
+        b[1] = (byte) (c & 0xFF);
+        return b;
+    }
+
+    private boolean getFalse(){
+        System.out.println("getFalse");
+        return false;
+    }
+
+    private boolean getTrue(){
+        System.out.println("getTrue");
+        return true;
+    }
+
+    @Test
+    public void jBarCode() throws Exception{
+        String sourceCode = "123";
+        JBarcode localJBarcode = new JBarcode(EAN13Encoder.getInstance(), WidthCodedPainter.getInstance(), EAN13TextPainter.getInstance());
+        String code = sourceCode + localJBarcode.calcCheckSum(sourceCode);
+        System.out.println(code);
+    }
+
+    @Test
+    public void format2() throws Exception{
+        System.out.println(String.format("%09d", 1));
+    }
+
+    @Test
+    public void encode() throws Exception{
+        System.out.println(URLEncoder.encode("水果","utf-8"));
+    }
+
+    @Test
+    public void toList(){
+        List<String> menuIdList = Lists.newArrayList("1","2");
+        Map<String,Boolean> map = menuIdList.stream().collect(Collectors.toMap(Function.identity(), t -> {
+            System.out.println(t);
+            return false;
+        }, (x, y) -> y));
+        System.out.println(map);
     }
 }

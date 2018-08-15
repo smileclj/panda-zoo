@@ -3,6 +3,7 @@ package com.panda.zoo.common.test.json;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
+import com.alibaba.fastjson.parser.Feature;
 import com.alibaba.fastjson.serializer.SerializerFeature;
 import com.panda.zoo.common.test.java.model.EmptyField;
 import com.panda.zoo.common.test.java.model.copy.StudentDO;
@@ -100,5 +101,12 @@ public class FastJsonTest {
 
         Student ss = JSON.parseObject(jsonStr,Student.class);
         System.out.println(ss);
+    }
+
+    @Test
+    public void testOrder(){
+        String str = "{\"2\":2,\"1\":1,\"3\":3}";
+        JSONObject jsonObject = JSON.parseObject(str, Feature.OrderedField);
+
     }
 }

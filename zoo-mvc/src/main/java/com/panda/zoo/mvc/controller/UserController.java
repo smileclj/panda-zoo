@@ -14,6 +14,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 import java.util.Map;
 
@@ -28,7 +29,8 @@ public class UserController {
 
     @RequestMapping("/getUserById")
     @ResponseBody
-    public Result<UserVo> getUserById(Integer id, HttpServletRequest req) {
+    public Result<UserVo> getUserById(Integer id, HttpServletRequest req, HttpServletResponse res) {
+//        req.getRequestDispatcher("").forward(req,res);
         Result<UserVo> result = new Result<>();
         UserVo userVo = new UserVo();
         userVo.setId(id);
