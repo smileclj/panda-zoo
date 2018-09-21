@@ -1,6 +1,9 @@
 package com.panda.zoo.common.test.java;
 
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.TypeReference;
+import com.alibaba.fastjson.util.TypeUtils;
 import com.google.common.base.CaseFormat;
 import com.google.common.base.Predicate;
 import com.google.common.base.Splitter;
@@ -10,6 +13,9 @@ import com.google.common.collect.Maps;
 import com.panda.zoo.common.test.java.enums.EnumIndustry;
 import com.panda.zoo.common.test.java.hibernate.EntityB;
 import com.panda.zoo.common.test.java.model.*;
+import com.panda.zoo.common.test.java.model2.AddItemEntry;
+import com.panda.zoo.common.test.java.model2.CategoryEntry;
+import com.panda.zoo.common.test.java.model2.ItemEntry;
 import com.panda.zoo.common.test.jvm.model.Student;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.ArrayUtils;
@@ -19,9 +25,13 @@ import org.jbarcode.encode.EAN13Encoder;
 import org.jbarcode.paint.EAN13TextPainter;
 import org.jbarcode.paint.WidthCodedPainter;
 import org.junit.Test;
+import sun.rmi.runtime.Log;
 
 import java.beans.Introspector;
 import java.io.*;
+import java.lang.reflect.Field;
+import java.lang.reflect.ParameterizedType;
+import java.lang.reflect.Type;
 import java.math.BigDecimal;
 import java.net.URL;
 import java.net.URLEncoder;
@@ -585,14 +595,14 @@ public class JavaTest {
         char[] cs = "MULTI_".toCharArray();
         byte[] bs1 = new byte[12];
         for (char c : cs) {
-            ArrayUtils.addAll(bs1,charToByte(c));
+            ArrayUtils.addAll(bs1, charToByte(c));
         }
 
         byte[] bs2 = "MULTI_".getBytes();
     }
 
     @Test
-    public void AndAnd(){
+    public void AndAnd() {
         System.out.println(getFalse() && getTrue());
         System.out.println("===================");
         System.out.println(getFalse() & getTrue());
@@ -609,18 +619,18 @@ public class JavaTest {
         return b;
     }
 
-    private boolean getFalse(){
+    private boolean getFalse() {
         System.out.println("getFalse");
         return false;
     }
 
-    private boolean getTrue(){
+    private boolean getTrue() {
         System.out.println("getTrue");
         return true;
     }
 
     @Test
-    public void jBarCode() throws Exception{
+    public void jBarCode() throws Exception {
         String sourceCode = "123";
         JBarcode localJBarcode = new JBarcode(EAN13Encoder.getInstance(), WidthCodedPainter.getInstance(), EAN13TextPainter.getInstance());
         String code = sourceCode + localJBarcode.calcCheckSum(sourceCode);
@@ -628,22 +638,134 @@ public class JavaTest {
     }
 
     @Test
-    public void format2() throws Exception{
+    public void format2() throws Exception {
         System.out.println(String.format("%09d", 1));
     }
 
     @Test
-    public void encode() throws Exception{
-        System.out.println(URLEncoder.encode("水果","utf-8"));
+    public void encode() throws Exception {
+        System.out.println(URLEncoder.encode("水果", "utf-8"));
     }
 
     @Test
-    public void toList(){
-        List<String> menuIdList = Lists.newArrayList("1","2");
-        Map<String,Boolean> map = menuIdList.stream().collect(Collectors.toMap(Function.identity(), t -> {
+    public void toList() {
+        List<String> menuIdList = Lists.newArrayList("1", "2");
+        Map<String, Boolean> map = menuIdList.stream().collect(Collectors.toMap(Function.identity(), t -> {
             System.out.println(t);
             return false;
         }, (x, y) -> y));
         System.out.println(map);
     }
+
+    @Test
+    public void seri() {
+        Seri seri = new Seri();
+        Child1 c1 = new Child1();
+        c1.setId("id");
+        c1.setC1("c1");
+        seri.setP(c1);
+        System.out.printf(JSON.toJSONString(seri));
+    }
+
+    @Test
+    public void stringBuilder() {
+        StringBuilder sb = new StringBuilder(2);
+        sb.append("222222");
+        System.out.println(sb.toString());
+    }
+
+    @Test
+    public void s() {
+        System.out.println(String.valueOf(new Student()));
+
+        Long l = new Long(1);
+        System.out.println(String.valueOf(l));
+    }
+
+    @Test
+    public void jsonTest() {
+        List<String> str = Lists.newArrayList("1", "2");
+        List<Long> ll = JSONArray.parseArray(JSON.toJSONString(str), Long.class);
+    }
+
+//    @Test
+//    public void typereferance() {
+//        TypeReference<User<Integer>> typeReference = new TypeReference<User<Integer>>() {
+//        };
+//
+//        User<Integer> user = load(typeReference);
+//        System.out.println(user);
+//    }
+
+    @Test
+    public void loadclass() throws Exception {
+        TypeReference<User<Integer>> typeReference = new TypeReference<User<Integer>>() {
+        };
+
+        Class clazz = TypeUtils.loadClass(typeReference.getType().getTypeName());
+    }
+
+    private <T> T load(Type type) {
+
+        return null;
+    }
+
+    @Test
+    public void ss() {
+        User user = new User<>();
+        user.setT(1);
+        System.out.println(JSON.toJSONString(user));
+    }
+
+    @Test
+    public void testListObject() {
+        Student s1 = new Student(1, "1");
+        Student s2 = new Student(2, "2");
+        List<Student> studentList = Lists.newArrayList(s1, s2);
+        System.out.println(JSON.toJSONString(studentList));
+
+        Student s3 = new Student(3, "3");
+        studentList.set(1,s3);
+
+        System.out.println(JSON.toJSONString(studentList));
+    }
+
+    @Test
+    public void testObjectRef(){
+        Info info = new Info();
+        Address address1 = new Address("1");
+        info.setAddress(address1);
+
+        address1 = new Address("2");
+
+        System.out.println(JSON.toJSONString(info));
+    }
+
+    @Test
+    public void testCategory(){
+        CategoryEntry categoryEntry = new CategoryEntry();
+        AddItemEntry addItemEntry = new AddItemEntry();
+        addItemEntry.setSelected(true);
+        addItemEntry.setItemId("1");
+        addItemEntry.setItemName("1");
+        categoryEntry.setItemList(Lists.newArrayList(addItemEntry));
+        System.out.println(JSON.toJSONString(categoryEntry));
+
+    }
+
+    @Test
+    public void testPP(){
+        AddItemEntry itemEntry = new AddItemEntry();
+        itemEntry.setSelected(true);
+        itemEntry.setItemId("1");
+        itemEntry.setItemName("1");
+        ItemEntry itemEntry1 = itemEntry;
+
+        Field[] fields = itemEntry1.getClass().getDeclaredFields();
+
+        Field[] fields2 = itemEntry1.getClass().getFields();
+
+        System.out.println(JSON.toJSONString(itemEntry1));
+    }
+
 }

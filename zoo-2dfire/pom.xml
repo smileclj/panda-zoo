@@ -12,6 +12,11 @@
     <artifactId>zoo-2dfire</artifactId>
 
     <dependencies>
+        <!--<dependency>-->
+            <!--<groupId>com.alipay.sdk</groupId>-->
+            <!--<artifactId>alipay-sdk-java</artifactId>-->
+            <!--<version>3.3.49.ALL</version>-->
+        <!--</dependency>-->
         <dependency>
             <groupId>com.dfire.soa</groupId>
             <artifactId>flame-client</artifactId>
@@ -21,6 +26,12 @@
             <groupId>com.dfire.soa</groupId>
             <artifactId>multi-filter</artifactId>
             <version>1.1.9</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.dfire.soa</groupId>
+            <artifactId>multi-converter</artifactId>
+            <version>1.0.6</version>
         </dependency>
 
         <dependency>

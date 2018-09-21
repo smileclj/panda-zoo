@@ -13,6 +13,18 @@
     <description></description>
 
     <dependencies>
+        <dependency>
+            <groupId>com.twodfire</groupId>
+            <artifactId>boss-utils</artifactId>
+            <version>1.0.26</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.wltea.analyzer</groupId>
+            <artifactId>IKAnalyzer</artifactId>
+            <version>5.0</version>
+        </dependency>
+
         <!--test-->
         <dependency>
             <groupId>junit</groupId>
