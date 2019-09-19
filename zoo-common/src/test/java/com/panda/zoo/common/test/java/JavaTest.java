@@ -4,19 +4,23 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.TypeReference;
 import com.alibaba.fastjson.util.TypeUtils;
+import com.caucho.hessian.io.Hessian2Input;
+import com.caucho.hessian.io.Hessian2Output;
+import com.caucho.hessian.io.HessianInput;
 import com.google.common.base.CaseFormat;
 import com.google.common.base.Predicate;
 import com.google.common.base.Splitter;
+import com.google.common.base.Strings;
 import com.google.common.collect.Collections2;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
+import com.panda.zoo.common.test.java.degrade.DegradeRule;
 import com.panda.zoo.common.test.java.enums.EnumIndustry;
 import com.panda.zoo.common.test.java.hibernate.EntityB;
 import com.panda.zoo.common.test.java.model.*;
-import com.panda.zoo.common.test.java.model2.AddItemEntry;
-import com.panda.zoo.common.test.java.model2.CategoryEntry;
-import com.panda.zoo.common.test.java.model2.ItemEntry;
+import com.panda.zoo.common.test.java.model2.*;
 import com.panda.zoo.common.test.jvm.model.Student;
+import com.panda.zoo.common.util.BeanMapUtils;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -29,17 +33,22 @@ import sun.rmi.runtime.Log;
 
 import java.beans.Introspector;
 import java.io.*;
-import java.lang.reflect.Field;
-import java.lang.reflect.ParameterizedType;
-import java.lang.reflect.Type;
+import java.lang.reflect.*;
 import java.math.BigDecimal;
 import java.net.URL;
+import java.net.URLClassLoader;
 import java.net.URLEncoder;
+import java.nio.MappedByteBuffer;
+import java.nio.channels.FileChannel;
 import java.text.DecimalFormat;
 import java.text.MessageFormat;
 import java.util.*;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 import java.util.function.Function;
+import java.util.jar.JarEntry;
+import java.util.jar.JarFile;
 import java.util.stream.Collectors;
 
 /**
@@ -305,12 +314,6 @@ public class JavaTest {
         return i;
     }
 
-    public static void main(String[] args) {
-        int i = 1;
-        i = add(i);
-        i = add(i);
-        System.out.println(i);
-    }
 
     @Test
     public void parseUrl() throws Exception {
@@ -725,13 +728,13 @@ public class JavaTest {
         System.out.println(JSON.toJSONString(studentList));
 
         Student s3 = new Student(3, "3");
-        studentList.set(1,s3);
+        studentList.set(1, s3);
 
         System.out.println(JSON.toJSONString(studentList));
     }
 
     @Test
-    public void testObjectRef(){
+    public void testObjectRef() {
         Info info = new Info();
         Address address1 = new Address("1");
         info.setAddress(address1);
@@ -742,7 +745,7 @@ public class JavaTest {
     }
 
     @Test
-    public void testCategory(){
+    public void testCategory() {
         CategoryEntry categoryEntry = new CategoryEntry();
         AddItemEntry addItemEntry = new AddItemEntry();
         addItemEntry.setSelected(true);
@@ -754,7 +757,7 @@ public class JavaTest {
     }
 
     @Test
-    public void testPP(){
+    public void testPP() {
         AddItemEntry itemEntry = new AddItemEntry();
         itemEntry.setSelected(true);
         itemEntry.setItemId("1");
@@ -766,6 +769,349 @@ public class JavaTest {
         Field[] fields2 = itemEntry1.getClass().getFields();
 
         System.out.println(JSON.toJSONString(itemEntry1));
+    }
+
+    @Test
+    public void testFastJsonDefaultValue() {
+        String str = "{}";
+        Item item = JSON.parseObject(str, Item.class);
+        System.out.println(item);
+    }
+
+    @Test
+    public void smallToBig() {
+        RepastItemReq repastItemReq = new RepastItemReq();
+        repastItemReq.setId("1");
+        repastItemReq.setName("小明");
+        ItemReq itemReq = (ItemReq) repastItemReq;
+        System.out.println(JSON.toJSONString(itemReq));
+    }
+
+    @Test
+    public void bigToSmall() {
+        ItemReq itemReq = new ItemReq();
+        itemReq.setId("1");
+        RepastItemReq repastItemReq = (RepastItemReq) itemReq;
+        System.out.println(JSON.toJSONString(repastItemReq));
+    }
+
+    @Test
+    public void testy() {
+        Boolean b = new Boolean(true);
+        System.out.println(!b);
+
+        Integer i = new Integer(0);
+        System.out.println(i < 5600);
+    }
+
+    @Test
+    public void testYu() {
+        System.out.println(1 & 4);
+    }
+
+    @Test
+    public void testDozer() {
+        CopyModel source = new CopyModel();
+        source.setList(Lists.newArrayList("1"));
+
+        CopyModel target = new CopyModel();
+        target.setList(Lists.newArrayList("2"));
+
+        BeanMapUtils.map(source, target);
+
+        System.out.println(JSON.toJSONString(target));
+    }
+
+    @Test
+    public void sss() {
+        File dir = new File("/opt/tmp/a/b");
+        if (!dir.exists()) {
+            dir.mkdirs();
+        }
+    }
+
+    @Test
+    public void cc() {
+        System.out.println(StringUtils.upperCase("abc_cde"));
+    }
+
+    @Test
+    public void dd() {
+        System.out.println(1 / 100);
+    }
+
+    @Test
+    public void JsonNum() {
+        NumberModel numberModel = new NumberModel();
+        numberModel.setD(1d);
+
+        System.out.println(JSON.toJSONString(numberModel));
+    }
+
+    @Test
+    public void mmmm() {
+        System.out.println(100 / 100);
+        System.out.println(100 / 100.0);
+    }
+
+    @Test
+    public void splitter() {
+        String clickUrl = "http://www.baidu.com";
+        System.out.println(JSON.toJSONString(Splitter.on("?").splitToList(clickUrl)));
+    }
+
+    @Test
+    public void bai() {
+        System.out.println(0 % 6);
+        System.out.println(1 % 6);
+        System.out.println(0 / 6);
+    }
+
+    public static void main(String[] args) {
+//        ExecutorService pool = Executors.newFixedThreadPool(2);
+//        pool.execute(() -> {
+//            try {
+//                Thread.sleep(5000);
+//            } catch (InterruptedException e) {
+//                e.printStackTrace();
+//            }
+//            System.out.println("a");
+//        });
+//
+//        pool.execute(() -> {
+//            try {
+//                Thread.sleep(5000);
+//            } catch (InterruptedException e) {
+//                e.printStackTrace();
+//            }
+//            System.out.println("b");
+//        });
+
+        new Thread(() -> {
+            try {
+                Thread.sleep(5000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            System.out.println("a");
+        }).start();
+
+        new Thread(() -> {
+            try {
+                Thread.sleep(5000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            System.out.println("b");
+        }).start();
+
+        System.out.println("main");
+    }
+
+    @Test
+    public void adapter() {
+        System.out.println(Object.class.equals(Object.class));
+        System.out.println(Student.class.isInstance(Object.class));
+        System.out.println(Student.class.isAssignableFrom(Object.class));
+    }
+
+    @Test
+    public void testDataOutPutStream() {
+        int v = 2147400000;
+        System.out.println(StringUtils.leftPad(Integer.toBinaryString(v), 32, "0"));
+        System.out.println((v >>> 24));
+        System.out.println((v >>> 16));
+        System.out.println((v >>> 8));
+        System.out.println((v >>> 0));
+        System.out.println("===========================");
+        System.out.println((v >>> 24) & 0xFF);
+        System.out.println((v >>> 16) & 0xFF);
+        System.out.println((v >>> 8) & 0xFF);
+        System.out.println((v >>> 0) & 0xFF);
+    }
+
+    @Test
+    public void security() {
+        System.out.println(System.getSecurityManager());
+    }
+
+    @Test
+    public void parseJar() throws Exception {
+        // 项目中jar包所在物理路径
+        URL url = this.getClass().getResource("/boss-center-client-1.0.74-cloudcash-item-SNAPSHOT.jar");
+        URL url2 = this.getClass().getResource("/twodfire-util-1.4.0.jar");
+        URLClassLoader myClassLoader = new URLClassLoader(new URL[]{url, url2}, Thread.currentThread().getContextClassLoader());
+
+        JarFile jarFile = new JarFile(new File(url.toURI()));
+        Enumeration<JarEntry> entrys = jarFile.entries();
+        while (entrys.hasMoreElements()) {
+            JarEntry jarEntry = entrys.nextElement();
+            System.out.println(jarEntry.getName());
+        }
+        Class clazz1 = myClassLoader.loadClass("com.twodfire.share.result.Result");
+        Class clazz = myClassLoader.loadClass("com.dfire.soa.boss.center.item.facade.service.IItemFacadeService");
+
+        Method[] methods = clazz.getDeclaredMethods();
+
+        clazz.getMethods();
+
+        for (Method m : methods) {
+            System.out.println(m.getName());
+            System.out.println(m.toGenericString());
+
+        }
+    }
+
+    @Test
+    public void binary() {
+        int a = 0b1010;
+        int b = 0b101010100101001001000;
+        System.out.println(Integer.toBinaryString(a & b));
+    }
+
+    @Test
+    public void resize() {
+        int n = 5;// 17
+        System.out.println("n |= n >>> 1 --> " + (n |= n >>> 1));
+        System.out.println("n |= n >>> 2 --> " + (n |= n >>> 2));
+        System.out.println("n |= n >>> 4 --> " + (n |= n >>> 4));
+        System.out.println("n |= n >>> 8 --> " + (n |= n >>> 8));
+        System.out.println("n |= n >>> 16 --> " + (n |= n >>> 16));
+        int result = (n < 0) ? 1 : n + 1;
+        System.out.println(result);
+    }
+
+    @Test
+    public void testIf() {
+        int a = -1, b = 4;
+        if (a > 0) {
+            System.out.println("a > 0");
+        } else if (b < 5) {
+            System.out.println("a < 0 & b < 5");
+        } else {
+            System.out.println("a < 0 & b >= 5");
+        }
+    }
+
+    @Test
+    public void testSort() {
+        List<Integer> list = Lists.newArrayList(1, 0, 1, 0);
+        list.sort((a, b) -> b - a);
+        System.out.println(JSON.toJSONString(list));
+    }
+
+    @Test
+    public void ceil() {
+        System.out.println(Math.ceil(5.0 / 2));
+        System.out.println(5.0 / 2);
+    }
+
+    @Test
+    public void yu() {
+        System.out.println(1 | 2 | 4);
+    }
+
+    @Test
+    public void yichu() {
+        System.out.println(Integer.MAX_VALUE + Integer.MAX_VALUE + 2);
+    }
+
+    @Test
+    public void chuyi() {
+        System.out.println(1 / 2);
+        System.out.println(1 % 2);
+    }
+
+    @Test
+    public void stringFormat() {
+        System.out.println(String.format("%s可享受贷款", "开通"));
+
+        DecimalFormat format = new DecimalFormat("###,###");
+        System.out.println(format.format(1000));
+        System.out.println(format.format(1000000));
+        System.out.println(format.format(1000000000));
+    }
+
+    @Test
+    public void calculate() {
+        System.out.println(1 << 30);
+        System.out.println(Math.pow(2, 30));
+    }
+
+    @Test
+    public void mmap() {
+        File file = new File("mmap");
+        if (!file.exists()) {
+            try {
+                file.createNewFile();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        try {
+            RandomAccessFile randomAccessFile = new RandomAccessFile(file, "rw");
+            FileChannel fileChannel = randomAccessFile.getChannel();
+            MappedByteBuffer mappedByteBuffer = fileChannel.map(FileChannel.MapMode.READ_WRITE, 0, 1024);
+            byte[] bs = new byte[1024 * 2];
+            for (int i = 0; i < bs.length; i++) {
+                bs[i] = (byte) 1;
+            }
+            mappedByteBuffer.put(bs);
+            System.out.println("11");
+            mappedByteBuffer.force();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Test
+    public void seril() throws Exception {
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        ObjectOutputStream oos = new ObjectOutputStream(baos);
+        Student s = new Student();
+        oos.writeObject(s);
+    }
+
+    @Test
+    public void seril2() throws Exception {
+        Hessian2Output hout = new Hessian2Output();
+        Student s = new Student();
+        hout.writeObject(s);
+
+        Hessian2Input hiput = new Hessian2Input();
+        hiput.readObject();
+    }
+
+    @Test
+    public void toS(){
+        System.out.println("份".toLowerCase());
+    }
+
+    @Test
+    public void ddd(){
+        String source = "[{\"count\":10.0,\"grade\":2,\"limitApp\":\"default\",\"passCount\":0,\"resource\":\"ad_xunfa\",\"timeWindow\":60}]";
+        List<DegradeRule> degradeRuleList = JSON.parseObject(source, new TypeReference<List<DegradeRule>>(){});
+        System.out.println(degradeRuleList);
+    }
+
+    @Test
+    public void testThrow(){
+        try {
+            System.out.println(1/0);
+        } finally {
+            System.out.println("finally");
+        }
+    }
+
+
+    @Test
+    public void indexOfString(){
+        String couponName = "发： 49.99元";
+        String separator = "：";
+        if(couponName.contains("：")){
+            couponName = couponName.substring(0,couponName.indexOf(separator));
+        }
+        System.out.println(couponName);
     }
 
 }

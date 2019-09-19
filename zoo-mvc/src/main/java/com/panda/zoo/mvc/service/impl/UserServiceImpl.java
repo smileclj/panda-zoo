@@ -1,11 +1,13 @@
 package com.panda.zoo.mvc.service.impl;
 
 import com.panda.zoo.mvc.model.UserVo;
+import com.panda.zoo.mvc.service.IItemService;
 import com.panda.zoo.mvc.service.IUserService;
 import org.springframework.stereotype.Service;
 import org.springframework.web.context.WebApplicationContext;
 import org.springframework.web.context.support.WebApplicationContextUtils;
 
+import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 
 /**
@@ -13,6 +15,9 @@ import javax.servlet.http.HttpServletRequest;
  */
 @Service
 public class UserServiceImpl implements IUserService {
+    @Resource
+    private IItemService itemService;
+
     @Override
     public void test(HttpServletRequest req) {
         WebApplicationContext webApplicationContext = WebApplicationContextUtils.getWebApplicationContext(req.getServletContext());

@@ -81,5 +81,14 @@ public class OvalTest {
         List<ConstraintViolation> constraintViolations = validator.validate(ej);
         Assert.assertTrue(constraintViolations.size() > 0);
     }
+
+    @Test
+    public void testModel(){
+        TestModel testModel = new TestModel();
+        testModel.setPrice(2.23);
+        Validator validator = new Validator();
+        List<ConstraintViolation> constraintViolations = validator.validate(testModel);
+        Assert.assertTrue(constraintViolations.size() > 0);
+    }
 }
 

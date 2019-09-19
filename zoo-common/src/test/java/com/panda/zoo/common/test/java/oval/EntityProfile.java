@@ -11,6 +11,8 @@ public class EntityProfile {
     private String id;
     @NotNull(profiles = {Profile.INSERT})
     private String name;
+    @NotNull
+    private Integer age;
 
     public String getId() {
         return id;
@@ -26,5 +28,13 @@ public class EntityProfile {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public Integer getAge() {
+        return age;
+    }
+
+    public void setAge(Integer age) {
+        this.age = age;
     }
 }

@@ -1,0 +1,23 @@
+@startuml
+title 解析普通标签流程
+autonumber 1 1
+XmlWebApplicaitonContext -> XmlWebApplicaitonContext:refreshBeanFactory()
+note left:AbstractRefreshableApplicationContext
+XmlWebApplicaitonContext -> XmlWebApplicaitonContext:loadBeanDefinitions()
+XmlWebApplicaitonContext -> XmlBeanDefinitionReader:loadBeanDefinitions(String)
+note left:AbstractBeanDefinitionReader
+group doLoadBeanDefinitions()
+XmlBeanDefinitionReader -> XmlBeanDefinitionReader:doLoadDocument()
+XmlBeanDefinitionReader -> XmlBeanDefinitionReader:registerBeanDefinitions()
+end
+XmlBeanDefinitionReader -> DefaultBeanDefinitionDocumentReader:registerBeanDefinitions()
+group doRegisterBeanDefinitions
+DefaultBeanDefinitionDocumentReader ->DefaultBeanDefinitionDocumentReader:parseBeanDefinitions()
+note left:解析普通元素或自定义元素
+DefaultBeanDefinitionDocumentReader ->DefaultBeanDefinitionDocumentReader:processBeanDefinition()
+end
+DefaultBeanDefinitionDocumentReader ->BeanDefinitionParserDelegate:parseBeanDefinitionElement()
+BeanDefinitionParserDelegate ->BeanDefinitionParserDelegate:BeanDefinitionReaderUtils. \n registerBeanDefinition()
+BeanDefinitionParserDelegate -> DefaultListableBeanFactory:registerBeanDefinition
+DefaultListableBeanFactory -> DefaultListableBeanFactory:注册到beanDefinitionMap中
+@enduml

@@ -1,0 +1,37 @@
+@startuml
+title 解析自定义标签流程
+autonumber 1 1
+XmlWebApplicaitonContext -> XmlWebApplicaitonContext:refreshBeanFactory()
+note left:AbstractRefreshableApplicationContext
+XmlWebApplicaitonContext -> XmlWebApplicaitonContext:loadBeanDefinitions()
+XmlWebApplicaitonContext -> XmlBeanDefinitionReader:loadBeanDefinitions(String)
+note left:AbstractBeanDefinitionReader
+group doLoadBeanDefinitions()
+XmlBeanDefinitionReader -> XmlBeanDefinitionReader:doLoadDocument()
+XmlBeanDefinitionReader -> XmlBeanDefinitionReader:registerBeanDefinitions()
+end
+XmlBeanDefinitionReader -> DefaultBeanDefinitionDocumentReader:registerBeanDefinitions()
+group doRegisterBeanDefinitions
+DefaultBeanDefinitionDocumentReader -> DefaultBeanDefinitionDocumentReader:parseBeanDefinitions()
+note left:解析普通元素或自定义元素
+DefaultBeanDefinitionDocumentReader -> DefaultBeanDefinitionDocumentReader:processBeanDefinition()
+end
+DefaultBeanDefinitionDocumentReader -> BeanDefinitionParserDelegate:parseBeanDefinitionElement()
+BeanDefinitionParserDelegate -> BeanDefinitionParserDelegate:parseCustomElement
+note left:通过不同的NamespaceHandler来解析\n此处以spring事务为例
+BeanDefinitionParserDelegate -> DefaultNamespaceHandlerResolver:resolve()
+DefaultNamespaceHandlerResolver -> DefaultNamespaceHandlerResolver:namespaceHandler.init()
+note left:TxNamespaceHandler
+DefaultNamespaceHandlerResolver -> BeanDefinitionParserDelegate:return NamespaceHandler
+BeanDefinitionParserDelegate -> TxNamespaceHandler:parse()
+note left:NamespaceHandlerSupport
+TxNamespaceHandler -> TxNamespaceHandler:findParserForElement()
+TxNamespaceHandler -> AnnotationDrivenBeanDefinitionParser:parse()
+AnnotationDrivenBeanDefinitionParser -> AnnotationDrivenBeanDefinitionParser:register InfrastructureAdvisorAutoProxyCreator
+
+group AnnotationDrivenBeanDefinitionParser.\nAopAutoProxyConfigurer.\nconfigureAutoProxyCreator
+AnnotationDrivenBeanDefinitionParser -> AnnotationDrivenBeanDefinitionParser:register AnnotationTransactionAttributeSource
+AnnotationDrivenBeanDefinitionParser -> AnnotationDrivenBeanDefinitionParser:register TransactionInterceptor
+AnnotationDrivenBeanDefinitionParser -> AnnotationDrivenBeanDefinitionParser:register BeanFactoryTransactionAttributeSourceAdvisor
+end
+@enduml

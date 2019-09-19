@@ -2,6 +2,7 @@ package com.panda.zoo.mybatis.test;
 
 import com.panda.zoo.mybatis.mapper.StudentMapper;
 import com.panda.zoo.mybatis.model.Student;
+import com.panda.zoo.mybatis.service.IUserService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.test.context.ContextConfiguration;
@@ -18,6 +19,8 @@ import javax.annotation.Resource;
 public class MybatisTest {
     @Resource
     private StudentMapper studentMapper;
+    @Resource
+    private IUserService userService;
 
     @Test
     public void test1() {
@@ -25,5 +28,10 @@ public class MybatisTest {
 
         student.setAge(111);
         studentMapper.updateByPrimaryKeySelective(student, true);
+    }
+
+    @Test
+    public void test2(){
+        userService.addUser();
     }
 }
