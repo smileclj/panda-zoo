@@ -12,8 +12,14 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 public class UserDaoImpl implements IUserDao {
     @Override
-    @Transactional(propagation = Propagation.REQUIRES_NEW)
+    @Transactional(propagation = Propagation.REQUIRED)
     public void addUser() {
-        System.out.println("UserDaoImpl");
+        System.out.println("UserDaoImpl addUser");
+    }
+
+    @Override
+    @Transactional(propagation = Propagation.REQUIRES_NEW)
+    public void deleteUser() {
+        System.out.println("UserDaoImpl deleteUser");
     }
 }

@@ -20,7 +20,10 @@ public class UserServiceImpl implements IUserService {
     @Override
     @Transactional(propagation = Propagation.REQUIRED)
     public void addUser() {
-        System.out.println("UserServiceImpl");
+        System.out.println("UserServiceImpl addUser");
+
         userDao.addUser();
+
+        userDao.deleteUser();
     }
 }

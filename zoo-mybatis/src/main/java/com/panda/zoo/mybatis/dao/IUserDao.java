@@ -6,4 +6,6 @@ package com.panda.zoo.mybatis.dao;
  */
 public interface IUserDao {
     void addUser();
+
+    void deleteUser();
 }
