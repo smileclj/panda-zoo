@@ -1,0 +1,4 @@
+#server配置
+server:
+  context-path: /
+  port: 8080
