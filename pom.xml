@@ -22,7 +22,7 @@
 
     <properties>
         <commons_lang3_version>3.4</commons_lang3_version>
-        <spring_version>4.3.25.RELEASE</spring_version>
+        <spring_version>5.3.18</spring_version>
         <aspectjweaver_version>1.8.8</aspectjweaver_version>
         <junit_version>4.11</junit_version>
         <dubbo_version>2.6.2</dubbo_version>
