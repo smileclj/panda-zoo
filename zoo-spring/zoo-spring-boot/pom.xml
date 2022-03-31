@@ -14,7 +14,7 @@
     <name>zoo-spring-boot</name>
 
     <properties>
-        <spring_boot_version>1.5.22.RELEASE</spring_boot_version>
+        <spring_boot_version>2.5.12</spring_boot_version>
     </properties>
 
     <dependencies>
