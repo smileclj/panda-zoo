@@ -25,7 +25,7 @@
         <spring_version>4.3.25.RELEASE</spring_version>
         <aspectjweaver_version>1.8.8</aspectjweaver_version>
         <junit_version>4.11</junit_version>
-        <dubbo_version>2.6.2</dubbo_version>
+        <dubbo_version>2.6.12</dubbo_version>
         <slf4j_version>1.7.7</slf4j_version>
         <logback_version>1.2.3</logback_version>
         <validation_api_version>1.0.0.GA</validation_api_version>
