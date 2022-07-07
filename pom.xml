@@ -29,7 +29,7 @@
         <slf4j_version>1.7.7</slf4j_version>
         <logback_version>1.2.3</logback_version>
         <validation_api_version>1.0.0.GA</validation_api_version>
-        <hibernate_validator_version>4.2.0.Final</hibernate_validator_version>
+        <hibernate_validator_version>6.0.23.Final</hibernate_validator_version>
         <guava_version>19.0</guava_version>
         <fastjson_version>1.2.49</fastjson_version>
         <servlet_version>3.1.0</servlet_version>
